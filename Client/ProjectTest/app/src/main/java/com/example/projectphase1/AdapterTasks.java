@@ -95,12 +95,15 @@ public class AdapterTasks extends RecyclerView.Adapter<AdapterTasks.MyViewHolder
                 rName.setText("" + jobsClassList.get(myViewHolder.getAdapterPosition()).getJobName());
                 Picasso.with(mcontext).load(jobsClassList.get(myViewHolder.getAdapterPosition()).getJobPhoto()).into(rImage);
                 dialog.show();
-                text = dialog.findViewById(R.id.dialogue_task_detail);
-                editText = dialog.findViewById(R.id.dialogue_Task_location);
                 final Button dialogueButton = (Button) dialog.findViewById(R.id.dialog_task_btn);
                 dialogueButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        isWalletValueInserted = false;
+                        text = dialog.findViewById(R.id.dialogue_task_detail);
+                        editText = dialog.findViewById(R.id.dialogue_Task_location);
+                        final String s = text.getText().toString();
+                        final String s2 = editText.getText().toString();
                         if (TextUtils.isEmpty(editText.getText()) || TextUtils.isEmpty(text.getText())) {
                             Toast.makeText(mcontext, "Enter the proper required details", Toast.LENGTH_SHORT).show();
                         } else {
@@ -141,9 +144,9 @@ public class AdapterTasks extends RecyclerView.Adapter<AdapterTasks.MyViewHolder
                                                         , jobsClassList.get(myViewHolder.getAdapterPosition()).getJobName()
                                                         , bill
                                                         , id
-                                                        , text.getText().toString()
+                                                        , s
                                                         , getDefaults("username", mcontext)
-                                                        , editText.getText().toString(), getDate());
+                                                        , s2, getDate());
                                                 databaseReference.child(id).setValue(classMyTasksFB);
                                             }
                                         } else
