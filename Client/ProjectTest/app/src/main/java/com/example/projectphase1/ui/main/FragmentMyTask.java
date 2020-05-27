@@ -19,6 +19,7 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.example.projectphase1.AcceptedTasks;
 import com.example.projectphase1.AdapterMyTasks;
 import com.example.projectphase1.ClassMyTask;
 import com.example.projectphase1.ClassMyTasksFB;
@@ -44,7 +45,7 @@ public class FragmentMyTask extends Fragment {
     String u="usama";
     private AdapterMyTasks recyclerViewAdopter;
     private RecyclerView myRecyclerView;
-    private List<ClassMyTask> myList;
+    private List<AcceptedTasks> myList;
     private DatabaseReference databaseReference;
 
     @Nullable
@@ -61,11 +62,11 @@ public class FragmentMyTask extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        myList = new ArrayList<ClassMyTask>();
+        myList = new ArrayList<AcceptedTasks>();
 
         u=getDefaults("username",this.getContext());
 
-        databaseReference= FirebaseDatabase.getInstance().getReference().child("tasks");
+        databaseReference= FirebaseDatabase.getInstance().getReference().child("acceptedTasks");
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -73,19 +74,19 @@ public class FragmentMyTask extends Fragment {
                 myList.clear();
                 for(DataSnapshot data:dataSnapshot.getChildren())
                 {
-                    if(data.child("myTask_username").getValue().equals(u))
+                    if(data.child("classAcceptedTask_username").getValue().equals(u))
                     {
-
                       //  Toast.makeText(getContext(),""+data.child("myTask_date").getValue(),Toast.LENGTH_LONG).show();
-                        myList.add(new ClassMyTask(data.child("mytask_id").getValue()+""
-                                ,data.child("myTask_username").getValue()+""
-                                ,data.child("job_name").getValue()+""
-                                ,Integer.parseInt(data.child("job_id").getValue()+"")
-                                ,Integer.parseInt(data.child("job_ammount").getValue()+"")
-                                ,data.child("myTask_date").getValue()+""
-                                ,data.child("myTask_location").getValue()+""
-                                ,data.child("mytask_description").getValue()+""
-                                ,data.child("job_img_url").getValue()+""));
+                        myList.add(new AcceptedTasks(data.child("classAcceptedTask_TaskId").getValue()+""
+                                ,data.child("classAcceptedTask_username").getValue()+""
+                                ,data.child("classAcceptedTask_Job_Name").getValue()+""
+                                ,Integer.parseInt(data.child("classAcceptedTask_task_job_id").getValue()+"")
+                                ,Double.parseDouble(data.child("classAcceptedTask_TaskBill").getValue()+"")
+                                ,data.child("classAcceptedTask_TaskDate").getValue()+""
+                                ,data.child("classAcceptedTask_TaskLocation").getValue()+""
+                                ,data.child("classAcceptedTask_TaakDescription").getValue()+""
+                                ,data.child("classAcceptedTask_TaskImage").getValue()+""
+                                , data.child("classAcceptedTask_workerId").getValue() + ""));
                        }
                 }
 

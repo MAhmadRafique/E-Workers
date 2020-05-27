@@ -12,7 +12,10 @@ public class AcceptedTasks {
     private String classAcceptedTask_TaskImage;
     private String classAcceptedTask_workerId;
 
-    public AcceptedTasks(String classAcceptedTask_TaskId, String classAcceptedTask_username, String classAcceptedTask_Job_Name, int classAcceptedTask_task_job_id, double classAcceptedTask_TaskBill, String classAcceptedTask_TaskDate, String classAcceptedTask_TaskLocation, String classAcceptedTask_TaakDescription, String classAcceptedTask_TaskImage, String classAcceptedTask_workerId) {
+    public AcceptedTasks(String classAcceptedTask_TaskId, String classAcceptedTask_username, String classAcceptedTask_Job_Name,
+                         int classAcceptedTask_task_job_id, double classAcceptedTask_TaskBill, String classAcceptedTask_TaskDate,
+                         String classAcceptedTask_TaskLocation, String classAcceptedTask_TaakDescription, String classAcceptedTask_TaskImage,
+                         String classAcceptedTask_workerId) {
         this.classAcceptedTask_TaskId = classAcceptedTask_TaskId;
         this.classAcceptedTask_username = classAcceptedTask_username;
         this.classAcceptedTask_Job_Name = classAcceptedTask_Job_Name;

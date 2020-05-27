@@ -33,8 +33,11 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
@@ -45,36 +48,38 @@ import java.util.List;
 import static android.content.Context.CONNECTIVITY_SERVICE;
 
 public class AdapterTasks extends RecyclerView.Adapter<AdapterTasks.MyViewHolder> {
-
-
     Context mcontext;
     List<ClassTasks> jobsClassList;
     EditText text;
-    DatabaseReference databaseReference= FirebaseDatabase.getInstance().getReference().child("requestedTasks");
+    DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("requestedTasks");
     EditText editText;
     Dialog dialog;
     ProgressBar progressBar;
     private final String CHANNEL_ID = "Personal Notification";
     private final int NOTIFICATION_ID = 1;
     ClassMyTasksFB classMyTasksFB;
-    public AdapterTasks(Context mcontext, List<ClassTasks> jobsClassList,ProgressBar p) {
+    double bill;
+    int walletValue;
+    ClassProfile classProfile;
+    boolean isWalletValueInserted = false;
+
+    public AdapterTasks(Context mcontext, List<ClassTasks> jobsClassList, ProgressBar p) {
         this.mcontext = mcontext;
         this.jobsClassList = jobsClassList;
-        progressBar=p;
+        progressBar = p;
     }
 
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view;
-        view = LayoutInflater.from(mcontext).inflate(R.layout.item_worker_task,parent,false);
-        final MyViewHolder myViewHolder=new MyViewHolder(view);
+        view = LayoutInflater.from(mcontext).inflate(R.layout.item_worker_task, parent, false);
+        final MyViewHolder myViewHolder = new MyViewHolder(view);
 
-        dialog=new Dialog(mcontext);
+        dialog = new Dialog(mcontext);
         dialog.setContentView(R.layout.dialog_task);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
-
 
 
         myViewHolder.linearLayout_Job_item.setOnClickListener(new View.OnClickListener() {
@@ -83,48 +88,82 @@ public class AdapterTasks extends RecyclerView.Adapter<AdapterTasks.MyViewHolder
 
 
                 //   TextView rID=(TextView) dialog.findViewById(R.id.rIDd);
-                final TextView rName=(TextView) dialog.findViewById(R.id.dialog_task_name);
-                ImageView rImage=(ImageView)dialog.findViewById(R.id.job_request_image);
+                final TextView rName = (TextView) dialog.findViewById(R.id.dialog_task_name);
+                ImageView rImage = (ImageView) dialog.findViewById(R.id.job_request_image);
                 //   rID.setText(""+jobsClassList.get(myViewHolder.getAdapterPosition()).getJobId());
 
-                rName.setText(""+jobsClassList.get(myViewHolder.getAdapterPosition()).getJobName());
-                Picasso.with(mcontext).load(jobsClassList.get(myViewHolder.getAdapterPosition()).getJobPhoto()).into( rImage);
+                rName.setText("" + jobsClassList.get(myViewHolder.getAdapterPosition()).getJobName());
+                Picasso.with(mcontext).load(jobsClassList.get(myViewHolder.getAdapterPosition()).getJobPhoto()).into(rImage);
                 dialog.show();
-                text=dialog.findViewById(R.id.dialogue_task_detail);
-                editText=dialog.findViewById(R.id.dialogue_Task_location);
-                final Button dialogueButton=(Button) dialog.findViewById(R.id.dialog_task_btn);
+                text = dialog.findViewById(R.id.dialogue_task_detail);
+                editText = dialog.findViewById(R.id.dialogue_Task_location);
+                final Button dialogueButton = (Button) dialog.findViewById(R.id.dialog_task_btn);
                 dialogueButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if(TextUtils.isEmpty(editText.getText()) ||TextUtils.isEmpty(text.getText()))
-                        {
-                            Toast.makeText(mcontext,"Enter the proper required details",Toast.LENGTH_SHORT).show();
-                        }
-                        else {
+                        if (TextUtils.isEmpty(editText.getText()) || TextUtils.isEmpty(text.getText())) {
+                            Toast.makeText(mcontext, "Enter the proper required details", Toast.LENGTH_SHORT).show();
+                        } else {
 
-                            if(isConnectedToInternet()) {
+                            if (isConnectedToInternet()) {
+                                DatabaseReference ahmad = FirebaseDatabase.getInstance().getReference().child("Profile");
+                                ahmad.addValueEventListener(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                        String uName = getDefaults("username", mcontext);
+                                        classProfile = new ClassProfile(dataSnapshot.child(getDefaults("username", mcontext)).child("profile_username").getValue() + "",
+                                                dataSnapshot.child(uName).child("profile_name").getValue() + "",
+                                                dataSnapshot.child(uName).child("profile_email").getValue() + "",
+                                                dataSnapshot.child(uName).child("profile_phone").getValue() + "",
+                                                dataSnapshot.child(uName).child("profile_adress").getValue() + "",
+                                                Integer.parseInt(dataSnapshot.child(uName).child("wallet_value").getValue() + ""),
+                                                Integer.parseInt(dataSnapshot.child(uName).child("membership_status").getValue() + ""));
 
-                                String id = databaseReference.push().getKey();
-                                classMyTasksFB = new ClassMyTasksFB(jobsClassList.get(myViewHolder.getAdapterPosition()).getJobPhoto()
-                                        , jobsClassList.get(myViewHolder.getAdapterPosition()).getJobId()
-                                        , jobsClassList.get(myViewHolder.getAdapterPosition()).getJobName()
-                                        , jobsClassList.get(myViewHolder.getAdapterPosition()).getJobammount()
-                                        , id
-                                        , text.getText().toString()
-                                        , getDefaults("username",mcontext)
-                                        , editText.getText().toString(), getDate());
-                                databaseReference.child(id).setValue(classMyTasksFB);
-                                
+
+                                        double membershipStatus = Double.parseDouble(classProfile.getMembership_status() + "");
+                                        bill = jobsClassList.get(myViewHolder.getAdapterPosition()).getJobammount();
+                                        walletValue = classProfile.getWallet_value();
+                                        membershipStatus *= 10;
+                                        membershipStatus /= 100;
+                                        bill = bill - (bill * membershipStatus);
+                                        if (walletValue > bill) {
+                                            walletValue -= bill;
+
+                                            classProfile.setWallet_value(walletValue);
+                                            if (!isWalletValueInserted) {
+                                                DatabaseReference ahmad2 = FirebaseDatabase.getInstance().getReference().child("Profile");
+                                                ahmad2.child(uName).setValue(classProfile);
+                                                isWalletValueInserted = true;
+
+                                                String id = databaseReference.push().getKey();
+                                                classMyTasksFB = new ClassMyTasksFB(jobsClassList.get(myViewHolder.getAdapterPosition()).getJobPhoto()
+                                                        , jobsClassList.get(myViewHolder.getAdapterPosition()).getJobId()
+                                                        , jobsClassList.get(myViewHolder.getAdapterPosition()).getJobName()
+                                                        , bill
+                                                        , id
+                                                        , text.getText().toString()
+                                                        , getDefaults("username", mcontext)
+                                                        , editText.getText().toString(), getDate());
+                                                databaseReference.child(id).setValue(classMyTasksFB);
+                                            }
+                                        } else
+                                            Toast.makeText(mcontext, "Low balance on Wallet..!!", Toast.LENGTH_SHORT).show();
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                    }
+                                });
+
                                 Toast.makeText(mcontext, "the request for task " + rName.getText() + " has sent", Toast.LENGTH_SHORT).show();
                                 dialog.hide();
                                 text.getText().clear();
                                 editText.getText().clear();
                                 show_notifiication();
-                             //   displayNotify("Your Task has been Register. Worker will be at your place with in 24 Hours");
+                                //displayNotify("Your Task has been Register. Worker will be at your place with in 24 Hours");
 
-                            }
-                            else
-                            {
+                            } else {
                                 displayNotify("Request cancelled ....Check your INTERNET CONNECTION");
                             }
                         }
@@ -138,20 +177,20 @@ public class AdapterTasks extends RecyclerView.Adapter<AdapterTasks.MyViewHolder
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
 
-        holder.job_ammount.setText(""+jobsClassList.get(position).getJobammount());
+        holder.job_ammount.setText("" + jobsClassList.get(position).getJobammount());
         holder.job_name.setText(jobsClassList.get(position).getJobName());
-        Picasso.with(mcontext).load(jobsClassList.get(position).getJobPhoto()).into(  holder.job_image);
+        Picasso.with(mcontext).load(jobsClassList.get(position).getJobPhoto()).into(holder.job_image);
         progressBar.setVisibility(View.GONE);
     }
 
-    public String getDate()
-    {
+    public String getDate() {
         Date c = Calendar.getInstance().getTime();
         System.out.println("Current time => " + c);
         SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
         String formattedDate = df.format(c);
         return formattedDate;
     }
+
     @Override
     public int getItemCount() {
         return jobsClassList.size();
@@ -162,43 +201,42 @@ public class AdapterTasks extends RecyclerView.Adapter<AdapterTasks.MyViewHolder
         return preferences.getString(key, null);
     }
 
-    public static class MyViewHolder extends RecyclerView.ViewHolder
-    {
+    public static class MyViewHolder extends RecyclerView.ViewHolder {
         private LinearLayout linearLayout_Job_item;
         private TextView job_name;
         private ImageView job_image;
         private TextView job_ammount;
-        public MyViewHolder( View itemView) {
+
+        public MyViewHolder(View itemView) {
             super(itemView);
 
-            linearLayout_Job_item=(LinearLayout)itemView.findViewById(R.id.job_item_id);
-            job_name= (TextView)itemView.findViewById(R.id.job_namee_id);
-            job_image= (ImageView) itemView.findViewById(R.id.job_item_imagee);
-            job_ammount= (TextView) itemView.findViewById(R.id.job_item_ammount);
+            linearLayout_Job_item = (LinearLayout) itemView.findViewById(R.id.job_item_id);
+            job_name = (TextView) itemView.findViewById(R.id.job_namee_id);
+            job_image = (ImageView) itemView.findViewById(R.id.job_item_imagee);
+            job_ammount = (TextView) itemView.findViewById(R.id.job_item_ammount);
 
         }
     }
 
-    public boolean isConnectedToInternet(){
+    public boolean isConnectedToInternet() {
         boolean have_WIFI = false;
         boolean have_MData = false;
 
-        ConnectivityManager connectivityManager =(ConnectivityManager) mcontext.getSystemService(CONNECTIVITY_SERVICE);
+        ConnectivityManager connectivityManager = (ConnectivityManager) mcontext.getSystemService(CONNECTIVITY_SERVICE);
         NetworkInfo[] networkInfos = connectivityManager.getAllNetworkInfo();
 
-        for(NetworkInfo info:networkInfos)
-        {
-            if(info.getTypeName().equalsIgnoreCase("WIFI"))
-                if(info.isConnected())
-                    have_WIFI=true;
-            if(info.getTypeName().equalsIgnoreCase("MOBILE"))
-                if(info.isConnected())
-                    have_MData=true;
+        for (NetworkInfo info : networkInfos) {
+            if (info.getTypeName().equalsIgnoreCase("WIFI"))
+                if (info.isConnected())
+                    have_WIFI = true;
+            if (info.getTypeName().equalsIgnoreCase("MOBILE"))
+                if (info.isConnected())
+                    have_MData = true;
         }
-        return have_MData||have_WIFI;
+        return have_MData || have_WIFI;
     }
-    public void displayNotify(String s)
-    {
+
+    public void displayNotify(String s) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             CharSequence name = "Personal Notification";
             String description = "NOtification";
@@ -225,9 +263,8 @@ public class AdapterTasks extends RecyclerView.Adapter<AdapterTasks.MyViewHolder
         notificationManagerCompat.notify(NOTIFICATION_ID, b.build());
     }
 
-    public void show_notifiication()
-    {
-        AlarmManager alarmManager = (AlarmManager)mcontext.getSystemService(Context.ALARM_SERVICE);
+    public void show_notifiication() {
+        AlarmManager alarmManager = (AlarmManager) mcontext.getSystemService(Context.ALARM_SERVICE);
         Intent notificationIntent = new Intent(mcontext, AlarmReceiver.class);
         PendingIntent broadcast = PendingIntent.getBroadcast(mcontext, 100, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
