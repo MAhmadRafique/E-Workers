@@ -111,7 +111,20 @@ public class SignUpScreen extends AppCompatActivity {
                                                         user.setSpeciality(4);
                                                     } else if (speciality.getSelectedItem().toString().equalsIgnoreCase("Technician")) {
                                                         user.setSpeciality(5);
-                                                    } else {
+                                                    }
+                                                    else if (speciality.getSelectedItem().toString().equalsIgnoreCase("Car Washer")) {
+                                                        user.setSpeciality(6);
+                                                    }
+                                                    else if (speciality.getSelectedItem().toString().equalsIgnoreCase("Gardener")) {
+                                                        user.setSpeciality(7);
+                                                    }
+                                                    else if (speciality.getSelectedItem().toString().equalsIgnoreCase("Welder")) {
+                                                        user.setSpeciality(9);
+                                                    }
+                                                    else if (speciality.getSelectedItem().toString().equalsIgnoreCase("Architect")) {
+                                                        user.setSpeciality(12);
+                                                    }
+                                                    else {
                                                         Toast.makeText(getApplicationContext(), "Speciality Not selected", Toast.LENGTH_SHORT).show();
                                                         return;
                                                     }

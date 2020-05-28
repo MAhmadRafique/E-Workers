@@ -26,7 +26,7 @@ public class MenuFeedback extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_feedback);
-        databaseReference=FirebaseDatabase.getInstance().getReference().child("Feedback");
+        databaseReference=FirebaseDatabase.getInstance().getReference().child("WorkerFeedback");
         text=findViewById(R.id.feedback_et_text);
 
     }

@@ -27,12 +27,17 @@
         <item>Chinese</item>
 
     </string-array>
+
     <string-array name="specialities">
         <item>Speciality</item>
         <item>Electrician</item>
         <item>Plumber</item>
         <item>Cleaner</item>
         <item>Painter</item>
+        <item>Car Washer</item>
+        <item>Gardener</item>
+        <item>Welder</item>
+        <item>Architect</item>
         <item>Technician</item>
     </string-array>
 
