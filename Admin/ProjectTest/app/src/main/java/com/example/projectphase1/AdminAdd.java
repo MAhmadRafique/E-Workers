@@ -77,7 +77,19 @@ public class AdminAdd extends AppCompatActivity {
                         workerProfile.setSpeciality(4+"");
                     } else if (speciality.getSelectedItem().toString().equalsIgnoreCase("Technician")) {
                         workerProfile.setSpeciality(5+"");
-                    } else {
+                    }  else if (speciality.getSelectedItem().toString().equalsIgnoreCase("Car Washer")) {
+                        workerProfile.setSpeciality(6+"");
+                    }
+                    else if (speciality.getSelectedItem().toString().equalsIgnoreCase("Gardener")) {
+                        workerProfile.setSpeciality(7+"");
+                    }
+                    else if (speciality.getSelectedItem().toString().equalsIgnoreCase("Welder")) {
+                        workerProfile.setSpeciality(9+"");
+                    }
+                    else if (speciality.getSelectedItem().toString().equalsIgnoreCase("Architect")) {
+                        workerProfile.setSpeciality(12+"");
+                    }
+                    else {
                         Toast.makeText(getApplicationContext(), "Speciality Not selected", Toast.LENGTH_SHORT).show();
                         return;
                     }

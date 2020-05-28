@@ -53,6 +53,7 @@ public class FragmentProfile extends Fragment {
         username_heading=view.findViewById(R.id.profile_tv_username_heading);
         tv=view.findViewById(R.id.profile_tv_username);
 
+
         profile__name=view.findViewById(R.id.profile_tv_name);
         profile__number=view.findViewById(R.id.profile_tv_phone);
         textViewn=view.findViewById(R.id.jn);

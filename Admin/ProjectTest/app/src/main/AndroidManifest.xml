@@ -14,7 +14,8 @@
         android:theme="@style/AppTheme">
         <activity android:name=".Earning"
             android:label="Earnings"
-            android:parentActivityName=".HomePageTabScreen"/>
+            android:parentActivityName=".HomePageTabScreen"
+            />
         <activity android:name=".UserSearch" />
         <activity android:name=".AdminAdd"
             android:label="Add Worker"
@@ -40,6 +41,7 @@
         <activity
             android:name=".SignUpScreen"
             android:theme="@style/AppTheme.NoActionBar" />
+
         <activity
             android:name=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar">

@@ -41,7 +41,6 @@ public class FragmentWorker extends Fragment {
         myRecyclerView = view.findViewById(R.id.recycleView_myTask);
         progressBar=view.findViewById(R.id.progressBar2);
         adapterWorker = new AdapterWorker(getContext(),myList,progressBar);
-
         myRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         myRecyclerView.setAdapter(adapterWorker);
         return  view;
@@ -50,7 +49,6 @@ public class FragmentWorker extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         myList = new ArrayList<ClassWorkerProfile>();
-
         databaseReference= FirebaseDatabase.getInstance().getReference().child("WorkerProfile");
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override

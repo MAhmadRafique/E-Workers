@@ -87,9 +87,24 @@ public class AdapterWorker extends RecyclerView.Adapter<AdapterWorker.MyViewHold
                     speciality.setText("Painter");
                 } else if (special == 5) {
                     speciality.setText("Technician");
-                } else {
+                }
+                else if (special == 6) {
+                    speciality.setText("Car Washer");
+                }
+                else if (special == 7) {
+                    speciality.setText("Gardener");
+                }
+                else if (special == 9) {
+                    speciality.setText("Welder");
+                }
+                else if (special == 12) {
+                    speciality.setText("Architect");
+                }
+                else{
 
                 }
+
+
 
 
                 //Picasso.with(mcontext).load(usersList.get(myViewHolder.getAdapterPosition()).getJobPhoto()).into( rImage);

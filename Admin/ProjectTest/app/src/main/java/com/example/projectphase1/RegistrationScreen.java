@@ -49,7 +49,7 @@ RegistrationScreen extends AppCompatActivity {
     public void call_r_signup(View view)
     {
         if(this.isConnectedToInternet()) {
-            Intent intent = new Intent(RegistrationScreen.this, HomePageTabScreen.class);
+            Intent intent = new Intent(RegistrationScreen.this, SignUpScreen.class);
             startActivity(intent);
         }
         else
