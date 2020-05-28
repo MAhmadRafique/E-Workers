@@ -12,6 +12,11 @@
         android:id="@+id/membership_tv_status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:layout_gravity="center"
+        android:background="@drawable/round_tasks"
+        android:padding="10dp"
+        android:textSize="20dp"
         android:text="Status" />
 
     <Button
@@ -19,12 +24,20 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Buy Membership"
+        android:padding="10dp"
+        android:textColor="@color/White"
+        android:background="@drawable/round_button"
         android:visibility="gone" />
 
     <EditText
         android:id="@+id/membership_balance_input"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:layout_margin="15dp"
+        android:layout_gravity="center"
+        android:textSize="20dp"
+        android:background="@drawable/round_tasks"
         android:visibility="gone" />
 
     <Button
@@ -32,6 +45,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Confirm"
+        android:padding="10dp"
+        android:textColor="@color/White"
+        android:background="@drawable/round_button"
         android:visibility="gone" />
 
 </LinearLayout>

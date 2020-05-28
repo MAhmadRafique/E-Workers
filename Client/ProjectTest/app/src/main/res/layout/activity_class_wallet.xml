@@ -28,7 +28,11 @@
 
     <EditText
         android:id="@+id/wallet_balance_input"
-        android:layout_width="wrap_content"
+        android:layout_width="100dp"
+        android:textSize="18dp"
+        android:background="@drawable/round_tasks"
+        android:layout_margin="15dp"
+        android:padding="10dp"
         android:layout_height="wrap_content"
         android:visibility="gone" />
 
@@ -36,6 +40,9 @@
         android:id="@+id/wallet_btn_deposit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@drawable/round_button"
+        android:padding="10dp"
+        android:textColor="@color/White"
         android:text="Deposit" />
 
     <Button
@@ -43,5 +50,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Confirm"
+        android:background="@drawable/round_button"
+        android:padding="10dp"
+        android:textColor="@color/White"
         android:visibility="gone" />
 </LinearLayout>
