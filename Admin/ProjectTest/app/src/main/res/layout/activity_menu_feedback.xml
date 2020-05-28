@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:background="#DBDBDB"
+    android:layout_gravity="center"
+    tools:context=".MenuFeedback"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:hint="Search Worker"
+        android:textSize="18dp"
+        android:layout_margin="15dp"
+        android:background="@drawable/round_fields2"
+        android:id="@+id/id_searchWorker"
+        android:gravity="center"
+        />
+
+    <Button
+        android:id="@+id/id_btnSearch"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:text="Search"
+        android:background="@drawable/round_button"
+        android:padding="10dp"
+        android:textColor="@color/White"
+        android:layout_gravity="center"
+        />
+
+
+    <LinearLayout
+        android:id="@+id/linearLayout_search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/round_fields2"
+        android:orientation="vertical"
+        android:layout_margin="15dp"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:gravity="center_vertical"
+            android:layout_margin="10dp"
+            android:background="@drawable/round_tasks"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="User Name: "
+                android:textSize="15dp"
+                android:gravity="center_vertical"
+                android:layout_marginLeft="10dp"
+                android:textAllCaps="true"
+                android:textStyle="bold"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:id="@+id/id_name"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:textAlignment="textEnd"
+                android:textSize="18sp"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:gravity="center_vertical"
+            android:layout_margin="10dp"
+            android:background="@drawable/round_tasks"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Email: "
+                android:textSize="15dp"
+                android:gravity="center_vertical"
+                android:layout_marginLeft="10dp"
+                android:textAllCaps="true"
+                android:textStyle="bold"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:id="@+id/id_email"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:textAlignment="textEnd"
+                android:textSize="18sp"
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:gravity="center_vertical"
+            android:layout_margin="10dp"
+            android:background="@drawable/round_tasks"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Phone Number: "
+                android:textSize="15dp"
+                android:gravity="center_vertical"
+                android:layout_marginLeft="10dp"
+                android:textAllCaps="true"
+                android:textStyle="bold"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:id="@+id/id_phoneNum"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:textAlignment="textEnd"
+                android:textSize="18sp"
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:gravity="center_vertical"
+            android:layout_margin="10dp"
+            android:background="@drawable/round_tasks"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Address: "
+                android:textSize="15dp"
+                android:gravity="center_vertical"
+                android:layout_marginLeft="10dp"
+                android:textAllCaps="true"
+                android:textStyle="bold"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:id="@+id/id_address"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:textAlignment="textEnd"
+                android:textSize="18sp"
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:gravity="center_vertical"
+            android:layout_margin="10dp"
+            android:background="@drawable/round_tasks"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Speciality: "
+                android:textSize="15dp"
+                android:gravity="center_vertical"
+                android:layout_marginLeft="10dp"
+                android:textAllCaps="true"
+                android:textStyle="bold"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:id="@+id/id_speciality"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:textAlignment="textEnd"
+                android:textSize="18sp"
+                />
+        </LinearLayout>
+
+
+
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/id_btnGoBack"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:text="Go Back"
+        android:background="@drawable/round_button"
+        android:textColor="@color/White"
+        android:layout_gravity="center"
+        />
+
+    </LinearLayout>

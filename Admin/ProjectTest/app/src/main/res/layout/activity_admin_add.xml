@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".AdminAdd">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="50dp"
+        android:text="Full Name"
+        android:textSize="17dp"
+        android:textColor="@color/BlackText"
+        android:textAllCaps="true"
+        android:textStyle="bold"
+        />
+    <EditText
+        android:background="@drawable/round_tasks"
+        android:layout_width="match_parent"
+        android:hint="Enter full name"
+        android:id="@+id/add_fullName"
+        android:gravity="center"
+        android:layout_height="40dp"
+        android:layout_marginTop="1dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:textSize="18sp"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:text="User Name"
+        android:textSize="17dp"
+        android:textColor="@color/BlackText"
+        android:textAllCaps="true"
+        android:textStyle="bold"
+        />
+    <EditText
+        android:background="@drawable/round_tasks"
+        android:layout_width="match_parent"
+        android:hint="Enter user name"
+        android:id="@+id/add_userName"
+        android:gravity="center"
+        android:layout_height="40dp"
+        android:layout_marginTop="1dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:textSize="18sp"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:text="Email"
+        android:textSize="17dp"
+        android:textColor="@color/BlackText"
+        android:textAllCaps="true"
+        android:textStyle="bold"
+        />
+    <EditText
+        android:background="@drawable/round_tasks"
+        android:layout_width="match_parent"
+        android:id="@+id/add_email"
+        android:hint="Enter email"
+        android:gravity="center"
+        android:layout_height="40dp"
+        android:layout_marginTop="1dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:textSize="18sp"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:text="Address"
+        android:textSize="17dp"
+        android:textColor="@color/BlackText"
+        android:textAllCaps="true"
+        android:textStyle="bold"
+        />
+    <EditText
+        android:background="@drawable/round_tasks"
+        android:layout_width="match_parent"
+        android:id="@+id/add_address"
+        android:gravity="center"
+        android:layout_height="40dp"
+        android:layout_marginTop="1dp"
+        android:hint="Enter address"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:textSize="18sp"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:text="Phone Number"
+        android:textSize="17dp"
+        android:textColor="@color/BlackText"
+        android:textAllCaps="true"
+        android:textStyle="bold"
+        />
+    <EditText
+        android:background="@drawable/round_tasks"
+        android:layout_width="match_parent"
+        android:id="@+id/add_pNum"
+        android:gravity="center"
+        android:layout_height="40dp"
+        android:hint="Enter phone number"
+        android:layout_marginTop="1dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:textSize="18sp"
+        />
+
+    <TextView
+        android:id="@+id/tv_speciality"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:text="Speciality"
+        android:textSize="17dp"
+        android:textColor="@color/BlackText"
+        android:textAllCaps="true"
+        android:textStyle="bold"
+        />
+    <Spinner
+        android:background="@drawable/round_tasks"
+        android:layout_width="match_parent"
+        android:id="@+id/add_speciality"
+        android:gravity="center"
+        app:hintEnabled="false"
+        android:entries="@array/specialities"
+        android:textAlignment="center"
+        android:layout_height="40dp"
+        android:layout_marginTop="1dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:textSize="18sp"
+        />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="332dp"
+        android:layout_marginTop="50dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/dialog_task_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="5dp"
+            android:layout_marginBottom="10dp"
+            android:layout_weight="1"
+            android:width="120dp"
+            android:background="@drawable/round_button"
+            android:onClick="cancelClicked"
+            android:text="Cancel"
+            android:textColor="@color/ButtonText"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/del_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="5dp"
+            android:layout_marginBottom="10dp"
+            android:layout_weight="1"
+            android:width="120dp"
+            android:background="@drawable/round_button"
+            android:onClick="addClicked"
+            android:text="Add"
+            android:textColor="@color/ButtonText"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+</LinearLayout>

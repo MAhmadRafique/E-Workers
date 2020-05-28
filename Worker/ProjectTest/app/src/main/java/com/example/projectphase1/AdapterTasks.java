@@ -44,195 +44,96 @@ import java.util.List;
 
 import static android.content.Context.CONNECTIVITY_SERVICE;
 
-public class AdapterTasks extends RecyclerView.Adapter<AdapterTasks.MyViewHolder> {
-
-
+public class AdapterTasks extends RecyclerView.Adapter<AdapterTasks.MyViewHolder3> {
     Context mcontext;
-    List<ClassTasks> jobsClassList;
-    EditText text;
-    DatabaseReference databaseReference= FirebaseDatabase.getInstance().getReference().child("tasks");
-    EditText editText;
+    List<AcceptedTasks> myTasksClassList;
     Dialog dialog;
-    ProgressBar progressBar;
-    private final String CHANNEL_ID = "Personal Notification";
-    private final int NOTIFICATION_ID = 1;
-    ClassMyTasksFB classMyTasksFB;
-    public AdapterTasks(Context mcontext, List<ClassTasks> jobsClassList,ProgressBar p) {
+
+    public AdapterTasks(Context mcontext, List<AcceptedTasks> jobsClassList) {
         this.mcontext = mcontext;
-        this.jobsClassList = jobsClassList;
-        progressBar=p;
+        this.myTasksClassList = jobsClassList;
+
     }
+
     @NonNull
     @Override
-    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public AdapterTasks.MyViewHolder3 onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view;
-        view = LayoutInflater.from(mcontext).inflate(R.layout.item_worker_task,parent,false);
-        final MyViewHolder myViewHolder=new MyViewHolder(view);
+        view = LayoutInflater.from(mcontext).inflate(R.layout.item_worker_task, parent, false);
+        final AdapterTasks.MyViewHolder3 myViewHolder = new AdapterTasks.MyViewHolder3(view);
 
-        dialog=new Dialog(mcontext);
+        dialog = new Dialog(mcontext);
         dialog.setContentView(R.layout.dialog_task);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
 
-
-
         myViewHolder.linearLayout_Job_item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                TextView task_dialogue_ID = (TextView) dialog.findViewById(R.id.dialogue_myTask_taskid);
+                TextView task_dialogue_Jobname = (TextView) dialog.findViewById(R.id.mytask_dialogue_name);
+                TextView task_dialogue_job_id = (TextView) dialog.findViewById(R.id.dialogue_myTask_jobid);
+                ImageView task_dialogue_image = (ImageView) dialog.findViewById(R.id.mytask_dialogue_image);
+                TextView task_dialogue_location = (TextView) dialog.findViewById(R.id.dialogue_myTask_Location);
+                TextView task_dialogue_bill = (TextView) dialog.findViewById(R.id.dialogue_myTask_bill);
+                TextView task_dialogue_date = (TextView) dialog.findViewById(R.id.dialogue_myTask_date);
+                TextView task_dialogue_UID = (TextView) dialog.findViewById(R.id.dialogue_myTask_description);
+                TextView task_dialogue_WorkerId = dialog.findViewById(R.id.dialogue_myTask_WorkerId);
+                TextView task_dialogue_username = dialog.findViewById(R.id.dialogue_myTask_username);
 
+                task_dialogue_bill.setText("" + myTasksClassList.get(myViewHolder.getAdapterPosition()).getClassAcceptedTask_TaskBill());
+                task_dialogue_date.setText("" + myTasksClassList.get(myViewHolder.getAdapterPosition()).getClassAcceptedTask_TaskDate());
+                task_dialogue_ID.setText("" + myTasksClassList.get(myViewHolder.getAdapterPosition()).getClassAcceptedTask_TaskId());
+                task_dialogue_job_id.setText("" + myTasksClassList.get(myViewHolder.getAdapterPosition()).getClassAcceptedTask_task_job_id());
+                task_dialogue_Jobname.setText("" + myTasksClassList.get(myViewHolder.getAdapterPosition()).getClassAcceptedTask_Job_Name());
+                task_dialogue_location.setText("" + myTasksClassList.get(myViewHolder.getAdapterPosition()).getClassAcceptedTask_TaskLocation());
+                task_dialogue_UID.setText("" + myTasksClassList.get(myViewHolder.getAdapterPosition()).getClassAcceptedTask_TaakDescription());
+                task_dialogue_WorkerId.setText("" + myTasksClassList.get(myViewHolder.getAdapterPosition()).getClassAcceptedTask_workerId());
+                task_dialogue_username.setText("" + myTasksClassList.get(myViewHolder.getAdapterPosition()).getClassAcceptedTask_username());
 
-                //   TextView rID=(TextView) dialog.findViewById(R.id.rIDd);
-                final TextView rName=(TextView) dialog.findViewById(R.id.dialog_task_name);
-                ImageView rImage=(ImageView)dialog.findViewById(R.id.job_request_image);
-                //   rID.setText(""+jobsClassList.get(myViewHolder.getAdapterPosition()).getJobId());
+                Picasso.with(mcontext).load(myTasksClassList.get(myViewHolder.getAdapterPosition()).getClassAcceptedTask_TaskImage()).into(task_dialogue_image);
 
-                rName.setText(""+jobsClassList.get(myViewHolder.getAdapterPosition()).getJobName());
-                Picasso.with(mcontext).load(jobsClassList.get(myViewHolder.getAdapterPosition()).getJobPhoto()).into( rImage);
                 dialog.show();
-                text=dialog.findViewById(R.id.dialogue_task_detail);
-                editText=dialog.findViewById(R.id.dialogue_Task_location);
-                final Button dialogueButton=(Button) dialog.findViewById(R.id.dialog_task_btn);
+
+
+                Button dialogueButton = (Button) dialog.findViewById(R.id.dialog_mytask_btn);
                 dialogueButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if(TextUtils.isEmpty(editText.getText()) ||TextUtils.isEmpty(text.getText()))
-                        {
-                            Toast.makeText(mcontext,"Enter the proper required details",Toast.LENGTH_SHORT).show();
-                        }
-                        else {
-
-                            if(isConnectedToInternet()) {
-
-                                String id = databaseReference.push().getKey();
-                                classMyTasksFB = new ClassMyTasksFB(jobsClassList.get(myViewHolder.getAdapterPosition()).getJobPhoto()
-                                        , jobsClassList.get(myViewHolder.getAdapterPosition()).getJobId()
-                                        , jobsClassList.get(myViewHolder.getAdapterPosition()).getJobName()
-                                        , jobsClassList.get(myViewHolder.getAdapterPosition()).getJobammount()
-                                        , id
-                                        , text.getText().toString()
-                                        , getDefaults("username",mcontext)
-                                        , editText.getText().toString(), getDate());
-                                databaseReference.child(id).setValue(classMyTasksFB);
-                                
-                                Toast.makeText(mcontext, "the request for task " + rName.getText() + " has sent", Toast.LENGTH_SHORT).show();
-                                dialog.hide();
-                                text.getText().clear();
-                                editText.getText().clear();
-                                show_notifiication();
-                             //   displayNotify("Your Task has been Register. Worker will be at your place with in 24 Hours");
-
-                            }
-                            else
-                            {
-                                displayNotify("Request cancelled ....Check your INTERNET CONNECTION");
-                            }
-                        }
+                        dialog.hide();
                     }
                 });
+
             }
         });
+
         return myViewHolder;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-
-        holder.job_ammount.setText(""+jobsClassList.get(position).getJobammount());
-        holder.job_name.setText(jobsClassList.get(position).getJobName());
-        Picasso.with(mcontext).load(jobsClassList.get(position).getJobPhoto()).into(  holder.job_image);
-        progressBar.setVisibility(View.GONE);
+    public void onBindViewHolder(@NonNull AdapterTasks.MyViewHolder3 holder, int position) {
+        holder.task_name.setText(myTasksClassList.get(position).getClassAcceptedTask_Job_Name());
+        Picasso.with(mcontext).load(myTasksClassList.get(position).getClassAcceptedTask_TaskImage()).into(holder.task_image);
     }
 
-    public String getDate()
-    {
-        Date c = Calendar.getInstance().getTime();
-        System.out.println("Current time => " + c);
-        SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
-        String formattedDate = df.format(c);
-        return formattedDate;
-    }
     @Override
     public int getItemCount() {
-        return jobsClassList.size();
+        return myTasksClassList.size();
     }
 
-    public static String getDefaults(String key, Context context) {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
-        return preferences.getString(key, null);
-    }
+    public static class MyViewHolder3 extends RecyclerView.ViewHolder {
+        LinearLayout linearLayout_Job_item;
+        private TextView task_name;
+        private ImageView task_image;
 
-    public static class MyViewHolder extends RecyclerView.ViewHolder
-    {
-        private LinearLayout linearLayout_Job_item;
-        private TextView job_name;
-        private ImageView job_image;
-        private TextView job_ammount;
-        public MyViewHolder( View itemView) {
+        public MyViewHolder3(View itemView) {
             super(itemView);
 
-            linearLayout_Job_item=(LinearLayout)itemView.findViewById(R.id.job_item_id);
-            job_name= (TextView)itemView.findViewById(R.id.job_namee_id);
-            job_image= (ImageView) itemView.findViewById(R.id.job_item_imagee);
-            job_ammount= (TextView) itemView.findViewById(R.id.job_item_ammount);
 
+            linearLayout_Job_item = (LinearLayout) itemView.findViewById(R.id.task_item_id);
+            task_name = (TextView) itemView.findViewById(R.id.task_item_name);
+            task_image = (ImageView) itemView.findViewById(R.id.task_item_image);
         }
-    }
-
-    public boolean isConnectedToInternet(){
-        boolean have_WIFI = false;
-        boolean have_MData = false;
-
-        ConnectivityManager connectivityManager =(ConnectivityManager) mcontext.getSystemService(CONNECTIVITY_SERVICE);
-        NetworkInfo[] networkInfos = connectivityManager.getAllNetworkInfo();
-
-        for(NetworkInfo info:networkInfos)
-        {
-            if(info.getTypeName().equalsIgnoreCase("WIFI"))
-                if(info.isConnected())
-                    have_WIFI=true;
-            if(info.getTypeName().equalsIgnoreCase("MOBILE"))
-                if(info.isConnected())
-                    have_MData=true;
-        }
-        return have_MData||have_WIFI;
-    }
-    public void displayNotify(String s)
-    {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            CharSequence name = "Personal Notification";
-            String description = "NOtification";
-            int importance = NotificationManager.IMPORTANCE_DEFAULT;
-
-            NotificationChannel notificationChannel = new NotificationChannel(CHANNEL_ID, name, importance);
-            notificationChannel.setDescription(description);
-
-            NotificationManager notificationManager = (NotificationManager) mcontext.getSystemService(mcontext.NOTIFICATION_SERVICE);
-            notificationManager.createNotificationChannel(notificationChannel);
-        }
-
-        Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-
-        NotificationCompat.Builder b = new NotificationCompat.Builder(mcontext, CHANNEL_ID);
-        b.setContentTitle("E-Worker");
-        b.setSmallIcon(R.drawable.app_icon);
-        b.setContentText(s);
-        b.setSound(alarmSound);
-        b.setPriority(NotificationCompat.PRIORITY_MAX
-        );
-
-        NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(mcontext);
-        notificationManagerCompat.notify(NOTIFICATION_ID, b.build());
-    }
-
-    public void show_notifiication()
-    {
-        AlarmManager alarmManager = (AlarmManager)mcontext.getSystemService(Context.ALARM_SERVICE);
-        Intent notificationIntent = new Intent(mcontext, AlarmReceiver.class);
-        PendingIntent broadcast = PendingIntent.getBroadcast(mcontext, 100, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-        Calendar cal = Calendar.getInstance();
-        cal.add(Calendar.SECOND, 5);
-        alarmManager.setExact(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), broadcast);
     }
 
 }
